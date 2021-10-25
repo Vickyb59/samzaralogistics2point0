@@ -55,8 +55,8 @@
                                                                                 style='display: block;'
                                                                                 src='https://www.samzaralogistics.com/assets/img/logo/logo-black.png'
                                                                                 alt='samzara-logo'
-                                                                                width='300'
-                                                                                height='60'
+                                                                                width='200'
+                                                                                height='52'
                                                                                 border='0'
                                                                             />
                                                                         </a>
@@ -191,16 +191,19 @@
                     unset($_SESSION['email']);
 
                     $_SESSION['success'] = 'You application has been sent and you will be contacted shortly. To continue to navigate site, <a href="index.php">Click Here</a>';
+                    header('location: join.php');
 
                 } 
                 catch (Exception $e) {
                     $_SESSION['success'] = 'You application has been sent and you will be contacted shortly. To continue to navigate site, <a href="index.php">Click Here</a>';
+                    header('location: join.php');
                 }
 
 
             }
             catch(PDOException $e){
                 $_SESSION['success'] = $e->getMessage();
+                header('location: join.php');
             }
 
             $pdo->close();

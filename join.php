@@ -72,7 +72,7 @@
                                         </div>
                                         <div class="form-group wow fadeInUp" data-wow-offset="50" data-wow-delay=".30s">
                                             <div class="col-sm-3"> <label class="title-2"> Email: </label></div>
-                                            <div class="col-sm-9"> <input type="text" name="email" id="Email" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" placeholder="Enter Your Accessible Email Address" class="form-control"> </div>
+                                            <div class="col-sm-9"> <input type="text" name="email" id="Email" required placeholder="Enter Your Accessible Email Address" class="form-control"> </div>
                                         </div>
                                         <div class="form-group wow fadeInUp" data-wow-offset="50" data-wow-delay=".30s">
                                             <div class="col-sm-3"> <label class="title-2"> Country of Residence: </label></div>
