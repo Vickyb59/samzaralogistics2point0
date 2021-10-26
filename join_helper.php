@@ -14,6 +14,8 @@
         $country = $_POST['country'];
         $career = $_POST['career'];
         $gender = $_POST['gender'];
+        $phone_number = $_POST['phone_number'];
+        $address = $_POST['address'];
 
         $_SESSION['lastname'] = $lastname;
         $_SESSION['firstname'] = $firstname;
@@ -32,8 +34,8 @@
             $now = date('Y-m-d');
 
             try{
-                $stmt = $conn->prepare("INSERT INTO applicants (firstname, lastname, email, country, career, gender, created_on) VALUES (:firstname, :lastname, :email, :country, :career, :gender, :now)");
-                $stmt->execute(['firstname'=>$firstname, 'lastname'=>$lastname, 'email'=>$email, 'country'=>$country, 'career'=>$career, 'gender'=>$gender, 'now'=>$now]);
+                $stmt = $conn->prepare("INSERT INTO applicants (firstname, lastname, email, country, career, gender, phone_number, address, created_on) VALUES (:firstname, :lastname, :email, :country, :career, :gender, :phone_number, :address, :now)");
+                $stmt->execute(['firstname'=>$firstname, 'lastname'=>$lastname, 'email'=>$email, 'country'=>$country, 'career'=>$career, 'gender'=>$gender, 'phone_number'=>$phone_number, 'address'=>$address, 'now'=>$now]);
 
                 $message = "
                     <div id='_rc_sig'>

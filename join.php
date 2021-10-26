@@ -75,6 +75,14 @@
                                             <div class="col-sm-9"> <input type="text" name="email" id="Email" required placeholder="Enter Your Accessible Email Address" class="form-control"> </div>
                                         </div>
                                         <div class="form-group wow fadeInUp" data-wow-offset="50" data-wow-delay=".30s">
+                                            <div class="col-sm-3"> <label class="title-2"> Phone Number: </label></div>
+                                            <div class="col-sm-9"> <input type="text" name="phone_number" id="PhoneNumber" required placeholder="Enter Your Phone Number" class="form-control"> </div>
+                                        </div>
+                                        <div class="form-group wow fadeInUp" data-wow-offset="50" data-wow-delay=".30s">
+                                            <div class="col-sm-3"> <label class="title-2"> Residential Address: </label></div>
+                                            <div class="col-sm-9"> <input type="text" name="address" id="Address" required placeholder="Enter Your Full Residential Address" class="form-control"> </div>
+                                        </div>
+                                        <div class="form-group wow fadeInUp" data-wow-offset="50" data-wow-delay=".30s">
                                             <div class="col-sm-3"> <label class="title-2"> Country of Residence: </label></div>
                                             <div class="col-sm-9"> 
                                                 <select aria-required="true" class="form-control" aria-label="Country of Residence" id="country" name="country" required>

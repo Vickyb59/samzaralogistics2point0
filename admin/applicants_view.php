@@ -36,8 +36,8 @@
                      <p> <?php echo $row0["email"]; ?> </p>
                  </li>
                  <li>
-                     <span class="title"><i class="fa fa-globe"></i> Nationality: </span>
-                     <p> <?php echo $row0["country"]; ?> </p>
+                     <span class="title"><i class="fa fa-phone"></i> Phone Number:</span>
+                     <p> <?php echo $row0["phone_number"]; ?> </p>
                  </li>
               </ul>
             </div>
@@ -45,11 +45,19 @@
             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 project-desc">
               <ul class="profile_info list_none mb-4 pt-2 border-bottom">
                  <li>
+                     <span class="title"><i class="fa fa-globe"></i> Nationality: </span>
+                     <p> <?php echo $row0["country"]; ?> </p>
+                 </li>
+                 <li>
+                     <span class="title"><i class="fa fa-home"></i> Address:</span>
+                     <p> <?php echo $row0["address"]; ?> </p>
+                 </li>
+                 <li>
                      <span class="title"><i class="fa fa-building"></i> Post Applied:</span>
                      <p> <?php echo $row0["career"]; ?> </p>
                  </li>
                  <li>
-                     <span class="title"><i class="fa fa-address-card"></i> Gender:</span>
+                     <span class="title"><i class="fa fa-venus-mars"></i> Gender:</span>
                      <p> <?php echo $row0["gender"]; ?> </p>
                  </li>
                  <li>
