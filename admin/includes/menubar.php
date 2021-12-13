@@ -21,6 +21,20 @@
       <li><a href="review.php"><i class="fa fa-registered"></i> <span>Reviews</span></a></li>
       <li><a href="users.php"><i class="fa fa-users"></i> <span>Workers</span></a></li>
       <li><a href="tracking.php"><i class="fa fa-truck"></i> <span>Tracking</span></a></li>
+      <li class="treeview">
+        <a href="#">
+          <i class="fa fa-tasks"></i>
+          <span>Tasks</span>
+          <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+          </span>
+        </a>
+        <ul class="treeview-menu">
+          <li><a href="taskmanagers.php"><i class="fa fa-male"></i> <span>Project Managers</span></a></li>
+          <li><a href="taskassign.php"><i class="fa fa-ravelry"></i> <span>Assign Task</span></a></li>
+          <li><a href="tasks.php"><i class="fa fa-tasks"></i> <span>All Tasks</span></a></li>
+        </ul>
+      </li>
       <li><a href="news.php"><i class="fa fa-newspaper-o"></i> <span>News</span></a></li>
       <li class="treeview">
         <a href="#">

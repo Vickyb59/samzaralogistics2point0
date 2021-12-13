@@ -9,6 +9,11 @@
 
         $conn = $pdo->open();
 
+        $stmt = $conn->prepare("SELECT * FROM users WHERE id=:id");
+        $stmt->execute(['id'=>$user_id]);
+        $row = $stmt->fetch();
+        $worker_name = $row['full_name'];
+
         if (!empty($_FILES['identity_file'])) {
         
         $total = count($_FILES['identity_file']['name']);
@@ -50,6 +55,17 @@
                                 $stmt->execute(['user_id'=>$user_id, 'file_name'=>$file_name, 'fileName'=>$fileName]);
 
                                 array_push($success, $fileName);
+
+                                //Notify Admin
+
+                                $msg = $worker_name." just submitted verification file. Login to your admin panel and navigate to view full user profile to see files";
+
+                                // use wordwrap() if lines are longer than 70 characters
+                                $msg = wordwrap(); //$msg = wordwrap($msg,70)
+
+                                // send email
+                                mail("info@samzaralogistics.com","New Identity Verification Alert",$msg);
+
                             } else {
                                 array_push($errors, "Could not upload your file. please try again later");
                             }

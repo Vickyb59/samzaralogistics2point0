@@ -17,7 +17,29 @@
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
-      <section class="content">
+    <section class="content">
+      <?php
+        if(isset($_SESSION['error'])){
+          echo "
+            <div class='alert alert-danger alert-dismissible'>
+              <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
+              <h4><i class='icon fa fa-warning'></i> Error!</h4>
+              ".$_SESSION['error']."
+            </div>
+          ";
+          unset($_SESSION['error']);
+        }
+        if(isset($_SESSION['success'])){
+          echo "
+            <div class='alert alert-success alert-dismissible'>
+              <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
+              <h4><i class='icon fa fa-check'></i> Success!</h4>
+              ".$_SESSION['success']."
+            </div>
+          ";
+          unset($_SESSION['success']);
+        }
+      ?>
       <div class="row">
          <div class="marbtm50 wdt-100">
             <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
@@ -136,6 +158,49 @@
                             <td>
                               <a href='uploads/".$file['file_name']."' class='btn btn-primary btn-sm btn-flat'><i class='fa fa-eye'></i> View</a>
                               <a href='users_file_delete.php?id=".$file['id']."' class='btn btn-danger btn-sm btn-flat'><i class='fa fa-trash'></i> Delete</a>
+                            </td>
+                          </tr>
+                        ";
+                      }
+                    }
+                    catch(PDOException $e){
+                      echo $e->getMessage();
+                    }
+
+                    $pdo->close();
+                  ?>
+                </tbody>
+              </table>
+            </div>
+         </div>
+         <div class="col-md-12 marbtm50 wdt-100">
+
+            <section class="content-header">
+              <h1>
+                Worker Identity Verification File
+              </h1>
+            </section>
+            
+            <div class="box-body">
+              <table id="example1" class="table table-bordered">
+                <thead>
+                  <th>File Name</th>
+                  <th>Tools</th>
+                </thead>
+                <tbody>
+                  <?php
+                    $conn = $pdo->open();
+
+                    try{
+                      $stmt = $conn->prepare("SELECT * FROM identity_verification_file WHERE user_id=:worker_id");
+                      $stmt->execute(['worker_id'=>$id]);
+                      foreach($stmt as $identity_file){
+                        echo "
+                          <tr>
+                            <td>".$identity_file['id_verification_file_name']."</td>
+                            <td>
+                              <a href='../images/".$identity_file['id_verification_file']."' class='btn btn-primary btn-sm btn-flat'><i class='fa fa-eye'></i> View</a>
+                              <a href='identity_verification_file_delete.php?id=".$identity_file['id_verification_file_id']."' class='btn btn-danger btn-sm btn-flat'><i class='fa fa-trash'></i> Delete</a>
                             </td>
                           </tr>
                         ";

@@ -11,11 +11,11 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Tracking
+        All Tasks
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Tracking</li>
+        <li class="active">All Tasks</li>
       </ol>
     </section>
 
@@ -46,17 +46,14 @@
       <div class="row">
         <div class="col-xs-12">
           <div class="box">
-            <div class="box-header with-border">
-              <a href="#addnew" data-toggle="modal" class="btn btn-primary btn-sm btn-flat"><i class="fa fa-plus"></i> New</a>
-
-            </div>
             <div class="box-body">
               <table id="example1" class="table table-bordered">
                 <thead>
-                  <th>Tracking ID</th>
-                  <th>Sender</th>
-                  <th>Receiver</th>
-                  <th>Date Shipped</th>
+                  <th>Title</th>
+                  <th>Assignee</th>
+                  <th>Manager</th>
+                  <th>Status</th>
+                  <th>Date Delegated</th>
                   <th>Tools</th>
                 </thead>
                 <tbody>
@@ -64,21 +61,21 @@
                     $conn = $pdo->open();
 
                     try{
-                      $stmt = $conn->prepare("SELECT * FROM tracking ORDER BY id DESC");
+                      $stmt = $conn->prepare("SELECT * FROM task LEFT JOIN users ON task.user_id=users.id LEFT JOIN project_manager ON task.pm_id=project_manager.pm_id");
                       $stmt->execute();
                       foreach($stmt as $row){
 
                         echo "
                           <tr>
-                            <td>".$row['trackingId']."</td>
-                            <td>".$row['sender']."</td>
-                            <td>".$row['receiver']."</td>
-                            <td>".date('M d, Y', strtotime($row['dateShipped']))."</td>
+                            <td>".$row['task_title']."</td>
+                            <td>".$row['full_name']."</td>
+                            <td>".$row['pm_name']."</td>
+                            <td>".$row['task_status']."</td>
+                            <td>".date('M d, Y', strtotime($row['task_delegate_date']))."</td>
                             <td>
-                              <button class='btn btn-primary btn-sm update btn-flat' data-id='".$row['id']."'><i class='fa fa-plane'></i> UPDATE</button>
-                              <button class='btn btn-info btn-sm edit btn-flat' data-id='".$row['id']."'><i class='fa fa-edit'></i> Edit</button>
-                              <a href='tracking_history.php?tid=".$row["id"]."' class='btn btn-primary btn-sm btn-flat'><i class='fa fa-history'></i> History</a>
-                              <button class='btn btn-danger btn-sm delete btn-flat' data-id='".$row['id']."'><i class='fa fa-trash'></i> Delete</button>
+                              <a href='task_view.php?task_id=".$row["task_id"]."' class='btn btn-primary btn-sm btn-flat'><i class='fa fa-eye'></i> V-Task</a>
+                              <button class='btn btn-info btn-sm edit btn-flat' data-id='".$row['task_id']."'><i class='fa fa-edit'></i> Edit</button>
+                              <button class='btn btn-danger btn-sm delete btn-flat' data-id='".$row['task_id']."'><i class='fa fa-trash'></i> Delete</button>
                             </td>
                           </tr>
                         ";
@@ -100,7 +97,7 @@
      
   </div>
   	<?php include 'includes/footer.php'; ?>
-    <?php include 'includes/tracking_modal.php'; ?>
+    <?php include 'includes/task_modal.php'; ?>
 
 </div>
 <!-- ./wrapper -->
@@ -123,11 +120,8 @@ $(function(){
     getRow(id);
   });
 
-  $(document).on('click', '.update', function(e){
-    e.preventDefault();
-    $('#update').modal('show');
-    var id = $(this).data('id');
-    getRow(id);
+  $("#edit").on("hidden.bs.modal", function () {
+      $('.append_items').remove();
   });
 
 });
@@ -135,32 +129,33 @@ $(function(){
 function getRow(id){
   $.ajax({
     type: 'POST',
-    url: 'tracking_row.php',
+    url: 'task_row.php',
     data: {id:id},
     dataType: 'json',
     success: function(response){
-      $('.trackingid').val(response.id);
-      $('#edit_trackingId').val(response.trackingId);
-      $('#update_trackingId').val(response.trackingId);
-      $('#edit_shipmentId').val(response.shipmentId);
-      $('#edit_dateShipped').val(response.dateShipped);
-      $('#edit_expDelDate').val(response.expDelDate);
-      $('#edit_origin').val(response.origin);
-      $('#edit_destination').val(response.destination);
-      $('#edit_sender').val(response.sender);
-      $('#edit_senderAdd').val(response.senderAdd);
-      $('#edit_receiver').val(response.receiver);
-      $('#edit_receiverAdd').val(response.receiverAdd);
-      $('#edit_terms').val(response.terms);
-      $('#edit_reference').val(response.reference);
-      $('#edit_orderNum').val(response.orderNum);
-      $('#edit_invoiceNum').val(response.invoiceNum);
-      $('#edit_quantity').val(response.quantity);
-      $('#edit_service').val(response.service);
-      $('#edit_weight').val(response.weight);
-      $('#edit_dimensions').val(response.dimensions);
-      $('.trackingId').html(response.trackingId);
-      CKEDITOR.instances["editor2"].setData(response.package);
+      $('.task_title').html(response.task_title);
+      $('.task_id').val(response.task_id);
+      $('.user_id').val(response.user_id);
+      $('#pmselected').val(response.pm_id).html(response.pm_name);
+      $('#edit_task_title').val(response.task_title);
+      $('#edit_task_delegate_date').val(response.task_delegate_date);
+      $('#edit_task_submit_date').val(response.task_submit_date);
+      $('#edit_task_description_summary').val(response.task_description_summary);
+      $('#edit_task_status').val(response.task_status);
+      CKEDITOR.instances["editor2"].setData(response.task_description);
+      getProjectManager();
+    }
+  });
+}
+
+function getProjectManager(){
+  $.ajax({
+    type: 'POST',
+    url: 'manager_fetch.php',
+    dataType: 'json',
+    success:function(response){
+      $('#manager').append(response);
+      $('#edit_manager').append(response);
     }
   });
 }
